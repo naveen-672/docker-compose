@@ -1,0 +1,489 @@
+# Flight Ticket Booking Application
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkyJet - Flight Booking</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
+      min-height: 100vh;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .hero {
+      min-height: 100vh;
+      padding: 30px 8%;
+      position: relative;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 60px;
+    }
+
+    .logo {
+      font-size: 30px;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      transition: 0.3s;
+      font-size: 15px;
+    }
+
+    .nav-links a:hover {
+      color: #38bdf8;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-size: 58px;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .hero-text p {
+      color: #cbd5e1;
+      line-height: 1.8;
+      margin-bottom: 30px;
+      font-size: 16px;
+    }
+
+    .hero-text button {
+      padding: 15px 30px;
+      border: none;
+      border-radius: 14px;
+      background: #38bdf8;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 600;
+    }
+
+    .hero-text button:hover {
+      background: #0ea5e9;
+      transform: translateY(-3px);
+    }
+
+    .hero-image img {
+      width: 100%;
+      animation: fly 4s infinite ease-in-out;
+    }
+
+    @keyframes fly {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .booking-card {
+      margin-top: 70px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      border-radius: 30px;
+      padding: 35px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .booking-card h2 {
+      margin-bottom: 25px;
+      font-size: 30px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input-group label {
+      margin-bottom: 8px;
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    .input-group input,
+    .input-group select {
+      padding: 14px;
+      border-radius: 14px;
+      border: none;
+      outline: none;
+      background: rgba(255,255,255,0.12);
+      color: white;
+      font-size: 15px;
+    }
+
+    .input-group input::placeholder {
+      color: #cbd5e1;
+    }
+
+    select option {
+      color: black;
+    }
+
+    .search-btn {
+      margin-top: 25px;
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      background: #22c55e;
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .search-btn:hover {
+      background: #16a34a;
+      transform: translateY(-2px);
+    }
+
+    .flight-list {
+      margin-top: 40px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .flight-card {
+      background: rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      transition: 0.3s;
+    }
+
+    .flight-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    .flight-info h3 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .flight-info p {
+      color: #cbd5e1;
+      margin-bottom: 5px;
+    }
+
+    .price {
+      font-size: 32px;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    .book-btn {
+      padding: 13px 26px;
+      border: none;
+      border-radius: 12px;
+      background: #38bdf8;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .book-btn:hover {
+      background: #0ea5e9;
+    }
+
+    .ticket {
+      margin-top: 40px;
+      background: white;
+      color: #111827;
+      border-radius: 24px;
+      padding: 30px;
+      display: none;
+    }
+
+    .ticket h2 {
+      margin-bottom: 20px;
+      color: #0f172a;
+    }
+
+    .ticket-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .ticket-box {
+      background: #f1f5f9;
+      padding: 18px;
+      border-radius: 14px;
+    }
+
+    .ticket-box span {
+      display: block;
+      color: #64748b;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .ticket-box strong {
+      font-size: 16px;
+    }
+
+    @media(max-width: 768px) {
+      .hero-text h1 {
+        font-size: 40px;
+      }
+
+      .navbar {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+
+    <div class="navbar">
+      <div class="logo">SkyJet</div>
+
+      <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Flights</a>
+        <a href="#">Offers</a>
+        <a href="#">Support</a>
+      </div>
+    </div>
+
+    <div class="hero-content">
+
+      <div class="hero-text">
+        <h1>Book Flights Across The World</h1>
+
+        <p>
+          Find affordable flights, premium comfort, and real-time booking.
+          Travel smarter with SkyJet Airlines.
+        </p>
+
+        <button onclick="scrollBooking()">Book Flight</button>
+      </div>
+
+      <div class="hero-image">
+        <img src="https://cdn-icons-png.flaticon.com/512/984/984565.png" alt="Flight">
+      </div>
+
+    </div>
+
+    <div class="booking-card" id="bookingSection">
+
+      <h2>Search Flights</h2>
+
+      <div class="form-grid">
+
+        <div class="input-group">
+          <label>From</label>
+          <input type="text" id="from" placeholder="Departure city">
+        </div>
+
+        <div class="input-group">
+          <label>To</label>
+          <input type="text" id="to" placeholder="Destination city">
+        </div>
+
+        <div class="input-group">
+          <label>Departure Date</label>
+          <input type="date" id="date">
+        </div>
+
+        <div class="input-group">
+          <label>Passengers</label>
+          <select id="passengers">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+          </select>
+        </div>
+
+      </div>
+
+      <button class="search-btn" onclick="searchFlights()">Search Flights</button>
+
+      <div class="flight-list" id="flightList"></div>
+
+      <div class="ticket" id="ticket">
+
+        <h2>Flight Ticket Confirmed ✈️</h2>
+
+        <div class="ticket-grid">
+
+          <div class="ticket-box">
+            <span>Airline</span>
+            <strong id="ticketAirline"></strong>
+          </div>
+
+          <div class="ticket-box">
+            <span>Route</span>
+            <strong id="ticketRoute"></strong>
+          </div>
+
+          <div class="ticket-box">
+            <span>Date</span>
+            <strong id="ticketDate"></strong>
+          </div>
+
+          <div class="ticket-box">
+            <span>Passengers</span>
+            <strong id="ticketPassengers"></strong>
+          </div>
+
+          <div class="ticket-box">
+            <span>Total Fare</span>
+            <strong id="ticketFare"></strong>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <script>
+
+    const flights = [
+      {
+        airline: 'Air India',
+        time: '06:00 AM - 09:00 AM',
+        type: 'Economy',
+        price: 5499
+      },
+      {
+        airline: 'IndiGo',
+        time: '11:00 AM - 02:00 PM',
+        type: 'Business Class',
+        price: 8999
+      },
+      {
+        airline: 'Emirates',
+        time: '08:00 PM - 12:00 AM',
+        type: 'Premium Economy',
+        price: 12999
+      }
+    ];
+
+    function scrollBooking() {
+      document.getElementById('bookingSection').scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+
+    function searchFlights() {
+
+      const from = document.getElementById('from').value;
+      const to = document.getElementById('to').value;
+      const date = document.getElementById('date').value;
+      const passengers = document.getElementById('passengers').value;
+
+      const flightList = document.getElementById('flightList');
+      flightList.innerHTML = '';
+
+      if(from === '' || to === '' || date === '') {
+        alert('Please fill all fields');
+        return;
+      }
+
+      flights.forEach(flight => {
+
+        const card = document.createElement('div');
+        card.classList.add('flight-card');
+
+        card.innerHTML = `
+          <div class="flight-info">
+            <h3>${flight.airline}</h3>
+            <p>${flight.time}</p>
+            <p>${flight.type}</p>
+            <p>${from} → ${to}</p>
+          </div>
+
+          <div class="price">₹${flight.price}</div>
+
+          <button class="book-btn"
+            onclick="bookFlight('${flight.airline}', '${from}', '${to}', '${date}', ${flight.price}, ${passengers})">
+            Book Now
+          </button>
+        `;
+
+        flightList.appendChild(card);
+      });
+
+    }
+
+    function bookFlight(airline, from, to, date, price, passengers) {
+
+      const ticket = document.getElementById('ticket');
+
+      document.getElementById('ticketAirline').innerText = airline;
+      document.getElementById('ticketRoute').innerText = from + ' → ' + to;
+      document.getElementById('ticketDate').innerText = date;
+      document.getElementById('ticketPassengers').innerText = passengers + ' Passenger(s)';
+      document.getElementById('ticketFare').innerText = '₹' + (price * passengers);
+
+      ticket.style.display = 'block';
+
+      ticket.scrollIntoView({
+        behavior: 'smooth'
+      });
+
+    }
+
+  </script>
+
+</body>
+</html>
+

@@ -1,0 +1,78 @@
+services:
+  bus:
+    container_name: bus_container
+    build: ./bus
+    ports:
+      - "1111:80"
+    networks:
+      - bus_network
+    volumes:
+      - bus:/usr
+    env_file:
+      - ./bus/bus.env
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 128M
+        reservations:
+          cpus: "0.25"
+          memory: 64M
+    restart: unless-stopped
+
+  flight:
+    container_name: flight_container
+    build: ./flight
+    ports:
+      - "1112:80"
+    networks:
+      - flight_network
+    volumes:
+      - flight:/usr
+    env_file:
+      - ./flight/flight.env
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 128M
+        reservations:
+          cpus: "0.25"
+          memory: 64M
+    restart: unless-stopped
+
+  movie:
+    container_name: movie_container
+    build: ./movie
+    ports:
+      - "1113:80"
+    networks:
+      - movie_network
+    environment:
+      username: "naveen"
+      password: "password"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 128M
+        reservations:
+          cpus: "0.25"
+          memory: 64M
+    restart: unless-stopped
+    depends_on:
+      - flight
+
+networks:
+  bus_network:
+    driver: bridge
+  flight_network:
+    driver: bridge
+  movie_network:
+    driver: bridge
+
+volumes:
+  bus:
+  flight:
+
+
